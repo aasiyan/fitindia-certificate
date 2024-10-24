@@ -34,8 +34,8 @@ const CertificateGenerator = () => {
   };
 
   const validateForm = () => {
-    const { name, photo, field, certificateCode, dateOfIssue } = details;
-    return name && photo && field && certificateCode && dateOfIssue;
+    const { name, photo, field, certificateCode } = details;
+    return name && photo && field && certificateCode;
   };
 
   const handleDownloadPDF = () => {
@@ -164,9 +164,9 @@ const CertificateGenerator = () => {
       <button className="button" onClick={handleDownloadPDF}>
         Download PDF
       </button>
-      <button className="button" onClick={handlePrint}>
+      {/* <button className="button" onClick={handlePrint}>
         Print
-      </button>
+      </button> */}
       <div>
         {/* <button onClick={() => (window.location.href = "/")}>Logout</button> */}
       </div>
