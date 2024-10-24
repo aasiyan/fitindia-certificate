@@ -1,5 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poltawski+Nowy:ital,wght@0,400..700;1,400..700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
 .container {
   display: flex;
   flex-direction: column;
@@ -14,6 +16,7 @@
   flex-direction: column;
   width: 300px;
   margin-bottom: 20px;
+  margin-top: 30px;
 }
 
 .label {
@@ -59,7 +62,7 @@
 .certificate-photo {
   width: 146px;
   height: 180px;
-  margin-top: 225px;
+  margin-top: 180px;
   margin-bottom: 2px;
   border-radius: 5px;
 }
@@ -79,25 +82,28 @@
   background-color: #45a049;
 }
 .certificate-text-name {
-  font-size: 43px;
-  margin-top: 440px;
+  font-size: 30px;
+  margin-top: 387px;
   font-weight: bold;
-  color: orangered;
-  font-family: "Ubuntu", sans-serif;
-  font-weight: 1000;
+  color: black;
+  font-family: "Poltawski Nowy", sans-serif;
+  font-weight: 600;
   font-style: normal;
 }
 .certificate-text-field {
+  font-family: "Poltawski Nowy", sans-serif;
   font-weight: bold;
-  font-size: 28px;
-  margin-top: 500px;
+  font-size: 18px;
+  color: #14297c;
+  margin-top: 685px;
+  margin-right: 261px;
 }
 .certificate-text-code {
-  font-size: 16px;
-  margin-top: 615px;
-  margin-left: -350px;
+  font-size: 18px;
+  margin-top: 713px;
+  margin-right: 283px;
   color: #14297c;
-  font-family: "Poppins", sans-serif;
+  font-family: "Poltawski Nowy", sans-serif;
   font-weight: 700;
 }
 .certificate-text-date {
@@ -105,6 +111,6 @@
   margin-top: 644px;
   margin-left: -355px;
   color: #14297c;
-  font-family: "Poppins", sans-serif;
+  font-family: "Poltawski Nowy", sans-serif;
   font-weight: 700;
 }

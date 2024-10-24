@@ -12,7 +12,6 @@ const CertificateGenerator = () => {
     certificateCode: "",
     dateOfIssue: "",
   });
-
   const certificateRef = useRef();
 
   const handleChange = (e) => {
@@ -76,6 +75,7 @@ const CertificateGenerator = () => {
 
   return (
     <div className="container">
+      <h1>Aasiyan Book of World Records</h1>
       <form className="form">
         <label className="label">
           Name:
@@ -97,7 +97,7 @@ const CertificateGenerator = () => {
           />
         </label>
         <label className="label">
-          Field:
+          Aadhar No
           <input
             className="input"
             type="text"
@@ -116,7 +116,7 @@ const CertificateGenerator = () => {
             onChange={handleChange}
           />
         </label>
-        <label className="label">
+        {/* <label className="label">
           Date of Issue:
           <input
             className="input"
@@ -125,7 +125,7 @@ const CertificateGenerator = () => {
             value={details.dateOfIssue}
             onChange={handleChange}
           />
-        </label>
+        </label> */}
       </form>
       <div ref={certificateRef} className="certificate">
         <img
@@ -145,13 +145,15 @@ const CertificateGenerator = () => {
           </div>
         </div>
         <div className="certificate-content">
-          <div className="certificate-text-name">{details.name}</div>
+          <div className="certificate-text-name">M/S. {details.name}</div>
         </div>
         <div className="certificate-content">
           <div className="certificate-text-field">{details.field}</div>
         </div>
         <div className="certificate-content">
-          <div className="certificate-text-code">{details.certificateCode}</div>
+          <div className="certificate-text-code">
+            AABWR{details.certificateCode}
+          </div>
         </div>
         <div className="certificate-content">
           <div className="certificate-text-date">
@@ -165,6 +167,9 @@ const CertificateGenerator = () => {
       <button className="button" onClick={handlePrint}>
         Print
       </button>
+      <div>
+        {/* <button onClick={() => (window.location.href = "/")}>Logout</button> */}
+      </div>
     </div>
   );
 };
