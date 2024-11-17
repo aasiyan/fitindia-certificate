@@ -98,6 +98,15 @@
   margin-top: 682px;
   margin-right: 261px;
 }
+.certificate-text-content {
+  font-family: "Poltawski Nowy", sans-serif;
+  font-size: 24px;
+  color: #14297c;
+  margin: 125px;
+  margin-top: 430px;
+  text-align: justify;
+  line-height: 30px;
+}
 .certificate-text-code {
   font-size: 18px;
   margin-top: 710px;
@@ -113,4 +122,34 @@
   color: #14297c;
   font-family: "Poltawski Nowy", sans-serif;
   font-weight: 700;
+}
+.certificate-text-category {
+  font-size: 24px;
+  margin-top: 434px;
+  margin-left: 282px;
+  font-weight: bold;
+  color: #14297c;
+  font-family: "Poltawski Nowy", sans-serif;
+  font-weight: 800;
+  font-style: normal;
+}
+.span-category {
+  font-weight: bold;
+}
+.span-content {
+  color: #efa91b;
+}
+.th-super {
+  font-size: 13px;
+  margin: 0px;
+}
+@media (max-width: 768px) {
+  .container {
+    width: 800px;
+    margin: 1000px;
+    margin-top: 0px;
+    margin-left: 0px;
+    /* margin-right: 0px; */
+    margin-bottom: 0px;
+  }
 }
