@@ -180,7 +180,7 @@ import React, { useState, useRef } from "react";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import "../components/CertificateGenerator.css";
-import certificateImg from "./assets/certificate-nocontent.png";
+import certificateImg from "./assets/certificate-fi.png";
 
 const CertificateGenerator = () => {
   const [details, setDetails] = useState({
@@ -191,7 +191,9 @@ const CertificateGenerator = () => {
     field: "",
     certificateCode: "",
     dateOfIssue: "",
-    category: "", // Added for select field
+    cource: "",
+    institution: "",
+    grade: "",
   });
   const certificateRef = useRef();
 
@@ -209,22 +211,38 @@ const CertificateGenerator = () => {
     reader.readAsDataURL(file);
   };
 
-  // const formatDate = (date) => {
-  //   const [year, month, day] = date.split("-");
-  //   return `${day}-${month}-${year}`;
-  // };
+  const formatDate = (date) => {
+    const [year, month, day] = date.split("-");
+    return `${day}-${month}-${year}`;
+  };
 
   const validateForm = () => {
-    const { name, photo, field, certificateCode, category, sodo, parentsname } =
-      details;
+    const {
+      name,
+      photo,
+
+      certificateCode,
+      cource,
+      sodo,
+      parentsname,
+      regno,
+      dateOfIssue,
+      institution,
+      admission,
+      grade,
+    } = details;
     return (
       name &&
       photo &&
-      field &&
       certificateCode &&
-      category &&
+      cource &&
       sodo &&
-      parentsname
+      parentsname &&
+      regno &&
+      institution &&
+      admission &&
+      dateOfIssue &&
+      grade
     );
   };
 
@@ -247,23 +265,133 @@ const CertificateGenerator = () => {
     });
   };
 
+  // NUMBER TO WORD CONVERTION FUNCTION
+  const [numbers, setNumbers] = useState({ first: "", second: "" });
+  const [texts, setTexts] = useState({ first: "", second: "", total: "" });
+  const [total, setTotal] = useState("");
+  // Helper function to convert number to words
+  const convertToWords = (num) => {
+    const ones = [
+      "",
+      "One",
+      "Two",
+      "Three",
+      "Four",
+      "Five",
+      "Six",
+      "Seven",
+      "Eight",
+      "Nine",
+      "Ten",
+      "Eleven",
+      "Twelve",
+      "Thirteen",
+      "Fourteen",
+      "Fifteen",
+      "Sixteen",
+      "Seventeen",
+      "Eighteen",
+      "Nineteen",
+    ];
+    const tens = [
+      "",
+      "",
+      "Twenty",
+      "Thirty",
+      "Forty",
+      "Fifty",
+      "Sixty",
+      "Seventy",
+      "Eighty",
+      "Ninety",
+    ];
+    const scales = ["", "Thousand", "Million", "Billion"];
+
+    if (num === 0) return "zero";
+
+    const numStr = num.toString();
+    if (numStr.length > 12) return "Number too large";
+
+    const numParts = [];
+    while (num > 0) {
+      numParts.push(num % 1000);
+      num = Math.floor(num / 1000);
+    }
+
+    let words = [];
+    for (let i = 0; i < numParts.length; i++) {
+      let partWords = [];
+      const n = numParts[i];
+
+      if (n >= 100) {
+        partWords.push(ones[Math.floor(n / 100)]);
+        partWords.push("Hundred");
+      }
+
+      const remainder = n % 100;
+      if (remainder > 0 && remainder < 20) {
+        partWords.push(ones[remainder]);
+      } else if (remainder >= 20) {
+        partWords.push(tens[Math.floor(remainder / 10)]);
+        if (remainder % 10 > 0) {
+          partWords.push(ones[remainder % 10]);
+        }
+      }
+
+      if (partWords.length > 0) {
+        words = [...partWords, scales[i], ...words];
+      }
+    }
+
+    return words.join(" ").trim();
+  };
+  const handleNtoW = (field, value) => {
+    if (!isNaN(value)) {
+      setNumbers((prev) => ({ ...prev, [field]: value }));
+      setTexts((prev) => ({
+        ...prev,
+        [field]: value ? convertToWords(parseInt(value)) : "",
+      }));
+
+      if (field === "first" || field === "second") {
+        const first =
+          field === "first"
+            ? parseInt(value || "0")
+            : parseInt(numbers.first || "0");
+        const second =
+          field === "second"
+            ? parseInt(value || "0")
+            : parseInt(numbers.second || "0");
+        const sum = first + second;
+        setTotal(sum.toString());
+        setTexts((prev) => ({
+          ...prev,
+          total: sum ? convertToWords(sum) : "",
+        }));
+      }
+    }
+  };
+  // const firstVal = numbers.first;
+  // const secondVal = numbers.second;
+  var setGrade;
+  // var total = parseInt(firstVal) + parseInt(secondVal);
+  // if (isNaN(total)) {
+  //   total = "";
+  // }
+
+  if (total > 80 && total <= 100) {
+    setGrade = "A";
+  } else if (total > 60 && total < 80) {
+    setGrade = "B";
+  } else {
+    setGrade = "C";
+  }
   return (
     <div className="container">
       <h1>Aasiyan Book of World Records</h1>
       <form className="form">
         <label className="label">
           Name:
-          <br />
-          <select
-            name="sodo"
-            className="input"
-            value={details.sodo}
-            onChange={handleChange}
-          >
-            <option value="">Select</option>
-            <option value="S/O">S/O</option>
-            <option value="D/O">D/O</option>
-          </select>
           <input
             className="input"
             type="text"
@@ -272,7 +400,7 @@ const CertificateGenerator = () => {
             onChange={handleChange}
           />
         </label>
-        <label className="lable">
+        {/* <label className="lable">
           <b>Parents Name</b>
           <input
             className="input"
@@ -281,7 +409,7 @@ const CertificateGenerator = () => {
             value={details.parentsname}
             onChange={handleChange}
           />
-        </label>
+        </label> */}
         <label className="label">
           Photo:
           <input
@@ -292,14 +420,14 @@ const CertificateGenerator = () => {
           />
         </label>
         <label className="label">
-          Category:
+          Cource:
           <select
             className="input"
-            name="category"
-            value={details.category}
+            name="cource"
+            value={details.cource}
             onChange={handleChange}
           >
-            <option value="">Select Category</option>
+            <option value="">Select Cource</option>
             <option value="Bharathanatyam">Bharathanatyam</option>
             <option value="Silambam">Silambam</option>
             <option value="Yoga">Yoga</option>
@@ -307,7 +435,7 @@ const CertificateGenerator = () => {
             <option value="Themmangu Pattu">Themmangu Pattu</option>
           </select>
         </label>
-        <label className="label">
+        {/* <label className="label">
           Aadhar No:
           <input
             className="input"
@@ -316,8 +444,29 @@ const CertificateGenerator = () => {
             value={details.field}
             onChange={handleChange}
           />
-        </label>
+        </label> */}
         <label className="label">
+          Register No:
+          <input
+            className="input"
+            type="text"
+            name="regno"
+            value={details.regno}
+            onChange={handleChange}
+          />
+        </label>
+        {/* <label className="label">
+          Register No:
+          <input
+            className="input"
+            type="text"
+            name="regno"
+            value={details.regno}
+            onChange={handleChange}
+          />
+        </label> */}
+
+        {/* <label className="label">
           Certificate Code:
           <input
             className="input"
@@ -325,6 +474,77 @@ const CertificateGenerator = () => {
             name="certificateCode"
             value={details.certificateCode}
             onChange={handleChange}
+          />
+        </label> */}
+        <label className="label">
+          Institution:
+          <select
+            className="input"
+            name="institution"
+            value={details.institution}
+            onChange={handleChange}
+          >
+            <option value="">Select Cource</option>
+            <option value="Bharathanatyam">Bharathanatyam</option>
+            <option value="Silambam">Silambam</option>
+            <option value="Yoga">Yoga</option>
+            <option value="Nattupura Kalaigal">Nattupura Kalaigal</option>
+            <option value="Themmangu Pattu">Themmangu Pattu</option>
+          </select>
+        </label>
+        <label className="label">
+          Admission No:
+          <input
+            className="input"
+            type="text"
+            name="admission"
+            value={details.admission}
+            onChange={handleChange}
+          />
+        </label>
+        <label className="label">
+          Date of Issue:
+          <input
+            className="input"
+            type="date"
+            name="dateOfIssue"
+            value={details.dateOfIssue}
+            onChange={handleChange}
+          />
+        </label>
+        <label className="label">
+          Grade:
+          <select
+            className="input"
+            name="grade"
+            value={details.grade}
+            onChange={handleChange}
+          >
+            <option value="">Select Grade</option>
+            <option value="A">A</option>
+            <option value="A+">A+</option>
+            <option value="B">B</option>
+            <option value="B+">B+</option>
+          </select>
+        </label>
+        <label className="label">
+          Theory Marks:
+          <input
+            type="text"
+            placeholder="Enter first number"
+            value={numbers.first}
+            onChange={(e) => handleNtoW("first", e.target.value)}
+            maxLength="3"
+          />
+        </label>
+        <label className="label">
+          Practical Marks:
+          <input
+            type="text"
+            placeholder="Enter second number"
+            value={numbers.second}
+            onChange={(e) => handleNtoW("second", e.target.value)}
+            maxLength="3"
           />
         </label>
       </form>
@@ -350,30 +570,58 @@ const CertificateGenerator = () => {
         <div className="certificate-content">
           <div className="certificate-text-field">{details.field}</div>
         </div>
+
         <div className="certificate-content">
-          <div className="certificate-text-content">
-            {details.sodo} {details.parentsname}, has participated in the event
-            entitled{" "}
-            <span className="span-category"> ‘{details.category}’</span> during
-            the outstanding World Record attempt for a{" "}
-            <span className="span-content">
-              ‘Continuously Performed Program’
-            </span>{" "}
-            , presented by Aasiyan Book of World Records and organized by Sri
-            Kalalaya Dance Academy. This record-breaking event was held on 24
-            <sup className="th-super">th</sup> November 2024 at Kattikulam
-            Soottukkole Mayandi Foundation, Thiruparankundram.
+          <div className="certificate-text-code">{details.certificateCode}</div>
+        </div>
+        <div className="certificate-content">
+          <div className="certificate-text-category">{details.cource}</div>
+        </div>
+        <div className="certificate-content">
+          <div className="certificate-text-regno">{details.regno}</div>
+        </div>
+        <div className="certificate-content">
+          <div className="certificate-text-institution">
+            {details.institution}
           </div>
         </div>
         <div className="certificate-content">
-          <div className="certificate-text-code">
-            AABWR{details.certificateCode}
+          <div className="certificate-text-admission">{details.admission}</div>
+        </div>
+        <div className="certificate-content">
+          <div className="certificate-start-date">19-10-1999</div>
+        </div>
+        <div className="certificate-content">
+          <div className="certificate-issue-date">
+            {details.dateOfIssue && formatDate(details.dateOfIssue)}
           </div>
         </div>
-        {/* <div className="certificate-content">
-          <div className="certificate-text-category">{details.category}</div>
-        </div> */}
+        <div className="certificate-content">
+          <div className="certificate-issue-grade">{details.grade}</div>
+        </div>
+        <div className="certificate-content">
+          <div className="certificate-firstmark-number">{numbers.first}</div>
+        </div>
+        <div className="certificate-content">
+          <div className="certificate-firstmark-text">{texts.first}</div>
+        </div>
+        <div className="certificate-content">
+          <div className="certificate-secondmark-number">{numbers.second}</div>
+        </div>
+        <div className="certificate-content">
+          <div className="certificate-secondmark-text">{texts.second}</div>
+        </div>
+        <div className="certificate-content">
+          <div className="certificate-total-number">{total}</div>
+        </div>
+        <div className="certificate-content">
+          <div className="certificate-total-grade">{setGrade}</div>
+        </div>
+        <div className="certificate-content">
+          <div className="certificate-total-text">{texts.total}</div>
+        </div>
       </div>
+
       <button className="button" onClick={handleDownloadPDF}>
         Download PDF
       </button>
