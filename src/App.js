@@ -10,7 +10,7 @@ function App() {
         <div className="App">
           <Routes>
             <Route path="/" element={<Authentication />} />
-            <Route path="/certificate" element={<CertificateGenerator />} />
+            <Route path="/fitindia-certificate" element={<CertificateGenerator />} />
           </Routes>
         </div>
       </Router>
