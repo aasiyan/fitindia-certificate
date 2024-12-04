@@ -176,9 +176,9 @@
 
 // export default CertificateGenerator;
 
-import React, { useState, useRef } from "react";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
+import React, { useRef, useState } from "react";
 import "../components/CertificateGenerator.css";
 import certificateImg from "./assets/certificate-fi.png";
 
@@ -189,13 +189,18 @@ const CertificateGenerator = () => {
     parentsname: "",
     photo: "",
     field: "",
-    certificateCode: "",
     dateOfIssue: "",
     cource: "",
     institution: "",
     grade: "",
+    certificateNo:""
   });
   const certificateRef = useRef();
+
+    // NUMBER TO WORD CONVERTION STATES
+    const [numbers, setNumbers] = useState({ first: "", second: "" });
+    const [texts, setTexts] = useState({ first: "", second: "", total: "" });
+    const [total, setTotal] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -220,38 +225,47 @@ const CertificateGenerator = () => {
     const {
       name,
       photo,
-
-      certificateCode,
       cource,
-      sodo,
-      parentsname,
       regno,
       dateOfIssue,
       institution,
       admission,
       grade,
+      certificateNo
     } = details;
     return (
       name &&
       photo &&
-      certificateCode &&
       cource &&
-      sodo &&
-      parentsname &&
       regno &&
       institution &&
       admission &&
       dateOfIssue &&
-      grade
+      grade &&
+      certificateNo
     );
   };
+  const validateFormMarks = () => {
+    const {
+      first,
+      second
+    } = numbers;
+    return (
+      first &&
+      second
+    );
+  };
+
 
   const handleDownloadPDF = () => {
     if (!validateForm()) {
       alert("Please fill out all fields before downloading the certificate.");
       return;
     }
-
+    if (!validateFormMarks()) {
+      alert("Please fill out all fields before downloading the certificate.");
+      return;
+    }
     const input = certificateRef.current;
     html2canvas(input, { scale: 1.5 }).then((canvas) => {
       const imgData = canvas.toDataURL("image/png");
@@ -265,10 +279,7 @@ const CertificateGenerator = () => {
     });
   };
 
-  // NUMBER TO WORD CONVERTION FUNCTION
-  const [numbers, setNumbers] = useState({ first: "", second: "" });
-  const [texts, setTexts] = useState({ first: "", second: "", total: "" });
-  const [total, setTotal] = useState("");
+
   // Helper function to convert number to words
   const convertToWords = (num) => {
     const ones = [
@@ -383,13 +394,18 @@ const CertificateGenerator = () => {
     setGrade = "A";
   } else if (total > 60 && total < 80) {
     setGrade = "B";
-  } else {
+  } else if (total > 40 && total < 60){
     setGrade = "C";
+  }
+  else{
+    setGrade = "";
   }
   return (
     <div className="container">
-      <h1>Aasiyan Book of World Records</h1>
+      <h1>Fit India Certificate Generator</h1>
       <form className="form">
+        <table>
+<tr>
         <label className="label">
           Name:
           <input
@@ -400,16 +416,19 @@ const CertificateGenerator = () => {
             onChange={handleChange}
           />
         </label>
-        {/* <label className="lable">
-          <b>Parents Name</b>
+        
+        <label className="label">
+          Certificate SI No:
           <input
             className="input"
             type="text"
-            name="parentsname"
-            value={details.parentsname}
+            name="certificateNo"
+            value={details.certificateNo}
             onChange={handleChange}
           />
-        </label> */}
+        </label>
+        </tr>
+        <tr>
         <label className="label">
           Photo:
           <input
@@ -419,32 +438,20 @@ const CertificateGenerator = () => {
             onChange={handlePhotoUpload}
           />
         </label>
+
+
         <label className="label">
-          Cource:
-          <select
+          Name of cource:
+          <input
+           type="text"
             className="input"
             name="cource"
             value={details.cource}
             onChange={handleChange}
-          >
-            <option value="">Select Cource</option>
-            <option value="Bharathanatyam">Bharathanatyam</option>
-            <option value="Silambam">Silambam</option>
-            <option value="Yoga">Yoga</option>
-            <option value="Nattupura Kalaigal">Nattupura Kalaigal</option>
-            <option value="Themmangu Pattu">Themmangu Pattu</option>
-          </select>
-        </label>
-        {/* <label className="label">
-          Aadhar No:
-          <input
-            className="input"
-            type="text"
-            name="field"
-            value={details.field}
-            onChange={handleChange}
           />
-        </label> */}
+        </label>
+        </tr>
+        <tr>
         <label className="label">
           Register No:
           <input
@@ -455,43 +462,31 @@ const CertificateGenerator = () => {
             onChange={handleChange}
           />
         </label>
-        {/* <label className="label">
-          Register No:
-          <input
-            className="input"
-            type="text"
-            name="regno"
-            value={details.regno}
-            onChange={handleChange}
-          />
-        </label> */}
 
-        {/* <label className="label">
-          Certificate Code:
-          <input
-            className="input"
-            type="text"
-            name="certificateCode"
-            value={details.certificateCode}
-            onChange={handleChange}
-          />
-        </label> */}
         <label className="label">
           Institution:
-          <select
+          <input
+          type="text"
             className="input"
             name="institution"
             value={details.institution}
             onChange={handleChange}
-          >
-            <option value="">Select Cource</option>
-            <option value="Bharathanatyam">Bharathanatyam</option>
-            <option value="Silambam">Silambam</option>
-            <option value="Yoga">Yoga</option>
-            <option value="Nattupura Kalaigal">Nattupura Kalaigal</option>
-            <option value="Themmangu Pattu">Themmangu Pattu</option>
-          </select>
+           />
         </label>
+        </tr>
+        <tr>
+        <label className="label">
+          Grade:
+          <input
+          type="text"
+            className="input"
+            name="grade"
+            value={details.grade}
+            onChange={handleChange}
+          />
+
+        </label>
+
         <label className="label">
           Admission No:
           <input
@@ -502,6 +497,8 @@ const CertificateGenerator = () => {
             onChange={handleChange}
           />
         </label>
+        </tr>
+        <tr>
         <label className="label">
           Date of Issue:
           <input
@@ -512,41 +509,33 @@ const CertificateGenerator = () => {
             onChange={handleChange}
           />
         </label>
-        <label className="label">
-          Grade:
-          <select
-            className="input"
-            name="grade"
-            value={details.grade}
-            onChange={handleChange}
-          >
-            <option value="">Select Grade</option>
-            <option value="A">A</option>
-            <option value="A+">A+</option>
-            <option value="B">B</option>
-            <option value="B+">B+</option>
-          </select>
-        </label>
+
         <label className="label">
           Theory Marks:
           <input
+          className="input"
             type="text"
-            placeholder="Enter first number"
+            placeholder="Enter Theory Mark"
             value={numbers.first}
             onChange={(e) => handleNtoW("first", e.target.value)}
             maxLength="3"
           />
         </label>
+        </tr>
+        <tr>
         <label className="label">
           Practical Marks:
           <input
             type="text"
-            placeholder="Enter second number"
+            className="input"
+            placeholder="Enter Practical Mark"
             value={numbers.second}
             onChange={(e) => handleNtoW("second", e.target.value)}
             maxLength="3"
           />
         </label>
+        </tr>
+        </table>
       </form>
 
       <div ref={certificateRef} className="certificate">
@@ -565,39 +554,39 @@ const CertificateGenerator = () => {
           )}
         </div>
         <div className="certificate-content">
-          <div className="certificate-text-name">M/S. {details.name}</div>
+          <div className="certificate-text-name common-style">M/S. {details.name}</div>
         </div>
         <div className="certificate-content">
-          <div className="certificate-text-field">{details.field}</div>
+          <div className="certificate-text-field common-style">{details.field}</div>
         </div>
 
         <div className="certificate-content">
-          <div className="certificate-text-code">{details.certificateCode}</div>
+          <div className="certificate-text-code common-style">{details.certificateCode}</div>
         </div>
         <div className="certificate-content">
-          <div className="certificate-text-category">{details.cource}</div>
+          <div className="certificate-text-category common-style">{details.cource}</div>
         </div>
         <div className="certificate-content">
-          <div className="certificate-text-regno">{details.regno}</div>
+          <div className="certificate-text-regno common-style">{details.regno}</div>
         </div>
         <div className="certificate-content">
-          <div className="certificate-text-institution">
+          <div className="certificate-text-institution common-style">
             {details.institution}
           </div>
         </div>
         <div className="certificate-content">
-          <div className="certificate-text-admission">{details.admission}</div>
+          <div className="certificate-text-admission  common-style">{details.admission}</div>
         </div>
         <div className="certificate-content">
-          <div className="certificate-start-date">19-10-1999</div>
+          <div className="certificate-start-date  common-style">19-10-1999</div>
         </div>
         <div className="certificate-content">
-          <div className="certificate-issue-date">
+          <div className="certificate-issue-date  common-style">
             {details.dateOfIssue && formatDate(details.dateOfIssue)}
           </div>
         </div>
         <div className="certificate-content">
-          <div className="certificate-issue-grade">{details.grade}</div>
+          <div className="certificate-issue-grade  common-style">{details.grade}</div>
         </div>
         <div className="certificate-content">
           <div className="certificate-firstmark-number">{numbers.first}</div>
@@ -612,13 +601,16 @@ const CertificateGenerator = () => {
           <div className="certificate-secondmark-text">{texts.second}</div>
         </div>
         <div className="certificate-content">
-          <div className="certificate-total-number">{total}</div>
+          <div className="certificate-total-number  ">{total}</div>
         </div>
         <div className="certificate-content">
-          <div className="certificate-total-grade">{setGrade}</div>
+          <div className="certificate-total-grade ">{setGrade}</div>
         </div>
         <div className="certificate-content">
-          <div className="certificate-total-text">{texts.total}</div>
+          <div className="certificate-total-text ">{texts.total}</div>
+        </div>
+        <div className="certificate-content">
+          <div className="certificate-text-certificateNo">{details.certificateNo}</div>
         </div>
       </div>
 
