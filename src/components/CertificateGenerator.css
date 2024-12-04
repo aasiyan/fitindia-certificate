@@ -175,10 +175,10 @@ tr{
   font-style: normal;
 }
 .certificate-total-text{
-  font-size: 13px;
+  font-size: 11.5px;
   margin-top: 710px;
-  margin-left: 520px;
-  letter-spacing: 1px;
+  margin-left: 514px;
+  letter-spacing: 0.5px;
   font-weight: 400;
 }
 .certificate-text-certificateNo{

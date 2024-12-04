@@ -390,11 +390,12 @@ const CertificateGenerator = () => {
   //   total = "";
   // }
 
-  if (total > 80 && total <= 100) {
+  var roundOff = total / 2;
+  if (roundOff > 80 && roundOff <= 100) {
     setGrade = "A";
-  } else if (total > 60 && total < 80) {
+  } else if (roundOff > 60 && roundOff < 80) {
     setGrade = "B";
-  } else if (total > 40 && total < 60){
+  } else if (roundOff > 40 && roundOff < 60){
     setGrade = "C";
   }
   else{
