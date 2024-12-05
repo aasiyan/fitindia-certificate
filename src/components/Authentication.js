@@ -12,7 +12,7 @@ function Authentication() {
   const handleLogin = (e) => {
     e.preventDefault();
     if (username === defaultUsername && password === defaultPassword) {
-      navigate("/certificate");
+      navigate("/fitindia-certificate");
     } else {
       alert("Incorrect username or password");
     }
