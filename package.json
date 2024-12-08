@@ -1,5 +1,5 @@
 {
-  "homepage": "http://aasiyan.github.io/certificate",
+  "homepage": "http://aasiyan.github.io/fitindia-certificate",
   "name": "certificate",
   "version": "0.1.0",
   "private": true,
@@ -7,7 +7,7 @@
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
-    "gh-pages": "^6.1.1",
+    "gh-pages": "^6.2.0",
     "html2canvas": "^1.4.1",
     "jspdf": "^2.5.1",
     "react": "^18.3.1",
