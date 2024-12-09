@@ -1,20 +1,20 @@
 {
   "files": {
-    "main.css": "/fitindia-certificate/static/css/main.ada3ec79.css",
-    "main.js": "/fitindia-certificate/static/js/main.cf8ca3e4.js",
-    "static/js/213.2813f940.chunk.js": "/fitindia-certificate/static/js/213.2813f940.chunk.js",
-    "static/js/732.5930ec13.chunk.js": "/fitindia-certificate/static/js/732.5930ec13.chunk.js",
-    "static/js/453.1db72cc2.chunk.js": "/fitindia-certificate/static/js/453.1db72cc2.chunk.js",
-    "static/media/certificate-fi.png": "/fitindia-certificate/static/media/certificate-fi.4aca3f8d8178bb182fd2.png",
+    "main.css": "/fitindia-certificate/static/css/main.c738e2ee.css",
+    "main.js": "/fitindia-certificate/static/js/main.06415924.js",
+    "static/js/213.92bb3c8c.chunk.js": "/fitindia-certificate/static/js/213.92bb3c8c.chunk.js",
+    "static/js/732.b2b30f3b.chunk.js": "/fitindia-certificate/static/js/732.b2b30f3b.chunk.js",
+    "static/js/453.47ac61ba.chunk.js": "/fitindia-certificate/static/js/453.47ac61ba.chunk.js",
+    "static/media/certificate-fi.png": "/fitindia-certificate/static/media/certificate-fi.39cb3faed8d87efc72a3.png",
     "index.html": "/fitindia-certificate/index.html",
-    "main.ada3ec79.css.map": "/fitindia-certificate/static/css/main.ada3ec79.css.map",
-    "main.cf8ca3e4.js.map": "/fitindia-certificate/static/js/main.cf8ca3e4.js.map",
-    "213.2813f940.chunk.js.map": "/fitindia-certificate/static/js/213.2813f940.chunk.js.map",
-    "732.5930ec13.chunk.js.map": "/fitindia-certificate/static/js/732.5930ec13.chunk.js.map",
-    "453.1db72cc2.chunk.js.map": "/fitindia-certificate/static/js/453.1db72cc2.chunk.js.map"
+    "main.c738e2ee.css.map": "/fitindia-certificate/static/css/main.c738e2ee.css.map",
+    "main.06415924.js.map": "/fitindia-certificate/static/js/main.06415924.js.map",
+    "213.92bb3c8c.chunk.js.map": "/fitindia-certificate/static/js/213.92bb3c8c.chunk.js.map",
+    "732.b2b30f3b.chunk.js.map": "/fitindia-certificate/static/js/732.b2b30f3b.chunk.js.map",
+    "453.47ac61ba.chunk.js.map": "/fitindia-certificate/static/js/453.47ac61ba.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.ada3ec79.css",
-    "static/js/main.cf8ca3e4.js"
+    "static/css/main.c738e2ee.css",
+    "static/js/main.06415924.js"
   ]
 }
